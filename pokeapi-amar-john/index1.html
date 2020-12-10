@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+</head>
+<body >
+    
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pokemon API</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-storage.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .jumbotron {
+    height: 100vh;
+    }
+  </style>
+</head>
+<body>
+<script>
+  function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <img class="navbar-brand" src="images/poke.svg.png">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#">GetTrainers</a></li>
+        <li><a href="#">GetImages</a></li>
+        <li><a href="#" onclick="toggle_visibility('AddParty');">AddParty</a></li>
+        <li><a href="#">DeleteParty</a></li>
+        <li><a href="#" onclick="toggle_visibility('UploadImage');">UploadImage</a></li>
+        <li><a href="#">GetParty</a></li>
+        <li><a href="#">GetPartyId</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container text-center">
+    <h1>Different EndPoints</h1>      
+   <div class="row">
+    <div class="col-4 d-flex justify-content-center text-center">
+
+      <div style="display:none" id="UploadImage">
+        <p>Click on the "Choose File" button to upload a file:</p>
+        <input style="margin-left:25%; width:50%; text-align: center;" type="file" class="form-control" id="fileButton" name="filename">
+      </div>
+
+      <div style="display:none; padding-top: 20px;" id="AddParty">
+        <input style="margin-left:25%; width:50%; text-align: center;" type="text" class="form-control" id="pokeNoAddParty" placeholder="Enter the Integer of the Pokemon you would like to Add">
+      </div>
+
+    </div>
+  </div>
+<!-- https://firebasestorage.googleapis.com/v0/b/pokemonapi-5ae54.appspot.com/o/image%2F1.jpeg?alt=media&token=aa00aa65-6a3d-4a80-86b1-7fd252bb72c0 -->
+  </div>
+</div>
+
+
+  
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBFjtMdhBjPYCD0Rw2byESG_pmzowlNot4",
+    authDomain: "pokemonapi-5ae54.firebaseapp.com",
+    databaseURL: "https://pokemonapi-5ae54.firebaseio.com",
+    projectId: "pokemonapi-5ae54",
+    storageBucket: "pokemonapi-5ae54.appspot.com",
+    messagingSenderId: "593763653181",
+    appId: "1:593763653181:web:2896a799e1599b8bc03c54",
+    measurementId: "G-QPTLJ2BQ9P"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  var fileButton = document.getElementById('fileButton');
+
+  fileButton.addEventListener('change', function(e) {
+
+    var file = e.target.files[0];
+    var storageRef = firebase.storage().ref(file.name)
+    var task = storageRef.put(file)
+    task.on('state_changed',
+        function progress(snapshot) {
+
+        },
+
+        function error(err) {
+            window.alert("Error uploading image, Check Network!")
+
+        },
+
+        function complete() {
+            window.alert("Picture Uploaded Successfully!")
+
+        }
+    )
+  })
+  
+
+</script>
+
+</body>
+</html>
